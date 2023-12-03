@@ -5,16 +5,18 @@
 def pascal_triangle(n):
     ''' Defines the Pascal triangle
 
-        res_idx = The index of the previous sub-list of the result list
+        n = Size of the pascal triangle
+        pascal = A list of list of integers
+        sublist_idx = The index of the previous sub-list of the pascal list
                     initial value = -1 since there is no previous sub-list yet
-        prev = index of the previous value in the res_idx list
-        current = index of the current value in the res_idx list
+        prev = index of the previous value in the sublist_idx list
+        current = index of the current value in the sublist_idx list
     '''
     if type(n) != int or n <= 0:
         return []
 
-    result = []
-    res_idx = -1
+    pascal = []
+    sublist_idx = -1
     for i in range(1, n + 1):
         new = []
         for j in range(i):
@@ -25,10 +27,10 @@ def pascal_triangle(n):
                     prev = 0
                     val = 1
                 else:
-                    val = result[res_idx][prev] + result[res_idx][current]
+                    val = pascal[sublist_idx][prev] + pascal[sublist_idx][current]
             except IndexError:
                 val = 1
             new.append(val)
-        result.append(new)
-        res_idx += 1
-    return result
+        pascal.append(new)
+        sublist_idx += 1
+    return pascal
