@@ -7,10 +7,12 @@ def pascal_triangle(n):
 
         n = Size of the pascal triangle
         pascal = A list of list of integers
-        sublist_idx = The index of the previous sub-list of the pascal list
-                    initial value = -1 since there is no previous sub-list yet
+        sublist_idx = The index of the previous/preceeding sub-list of the
+                    pascal list initial value = -1 since there is no previous
+                    sub-list yet
         prev = index of the previous value in the sublist_idx list
         current = index of the current value in the sublist_idx list
+        val = Value to be appended to the new list
     '''
     if type(n) != int or n <= 0:
         return []
@@ -24,10 +26,10 @@ def pascal_triangle(n):
                 current = j
                 prev = current - 1
                 if prev < 0:
-                    prev = 0
                     val = 1
                 else:
-                    val = pascal[sublist_idx][prev] + pascal[sublist_idx][current]
+                    val =\
+                      pascal[sublist_idx][prev] + pascal[sublist_idx][current]
             except IndexError:
                 val = 1
             new.append(val)
