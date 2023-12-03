@@ -1,4 +1,5 @@
 # PASCAL TRIANGLE
+Pascal's Triangle is a mathematical concept that generates a triangular array of binomial coefficients. Each number in the triangle is the sum of the two directly above it.
 
 ### [0-pascal_triangle.py](https://github.com/JamesRaphaelJRC/alx-interview/blob/main/0-pascal_triangle.py)
 Returns a list of lists of integers representing the Pascal's triangle of n.
