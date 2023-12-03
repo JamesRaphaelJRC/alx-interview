@@ -1,3 +1,6 @@
+''' The Pascals triangle '''
+
+
 def pascal_triangle(n):
     ''' Defines the Pascal triangle
 
