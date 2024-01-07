@@ -1,7 +1,9 @@
 #!/usr/bin/python3
+''' Defines a function validateUTF8 '''
 
 
 def validUTF8(data):
+    ''' etermines if a given data set represents a valid UTF-8 encoding '''
     # Variable to keep track of the number of consecutive leading bits
     leading_bits_count = 0
 
