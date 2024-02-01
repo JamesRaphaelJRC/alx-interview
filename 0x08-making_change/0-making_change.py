@@ -3,13 +3,10 @@
 
 
 def makeChange(coins, total):
-    ''' Returns the fewest number of coins needed to meet 'total'
-    '''
-    if total <= 0:
-        return 0
+    if total < 0:
+        return -1
 
-    # Initialize an array to store the minimum number of coins needed
-    # for each amount
+    # Initialize an array to store the minimum number of coins needed for each amount
     dp = [float('inf')] * (total + 1)
     dp[0] = 0  # You need 0 coins to make change for 0
 
