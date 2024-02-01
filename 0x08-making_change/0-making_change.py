@@ -3,15 +3,24 @@
 
 
 def makeChange(coins, total):
-    if total < 0:
-        return -1
+    ''' Returns the fewest number of coins needed to meet 'total'
+    '''
+    if total <= 0:
+        return 0
 
-    # Initialize an array to store the minimum number of coins needed for each amount
-    dp = [float('inf')] * (total + 1)
-    dp[0] = 0  # You need 0 coins to make change for 0
+    rem = total
+    coins_count = 0
+    coin_idx = 0
+    sorted_coins = sorted(coins, reverse=True)
+    n = len(coins)
 
-    for coin in coins:
-        for amount in range(coin, total + 1):
-            dp[amount] = min(dp[amount], dp[amount - coin] + 1)
+    while rem > 0:
+        if coin_idx >= n:
+            return -1
+        if rem - sorted_coins[coin_idx] >= 0:
+            rem -= sorted_coins[coin_idx]
+            coins_count += 1
+        else:
+            coin_idx += 1
 
-    return dp[total] if dp[total] != float('inf') else -1
+    return coins_count
