@@ -2,48 +2,31 @@
 ''' Prime Game module '''
 
 
-def is_prime(num):
-    ''' Checks if a number is a prime number'''
-    if num < 2:
-        return False
-    for i in range(2, int(num**0.5) + 1):
-        if num % i == 0:
-            return False
-    return True
-
-
-def get_primes_up_to_n(n):
-    ''' gets a list of prime numbers from 0 to n '''
-    primes = []
-    for i in range(2, n+1):
-        if is_prime(i):
-            primes.append(i)
-    return primes
+def sieve_of_eratosthenes(n):
+    ''' Uses sieve of Eratosthenes to calculate prime numbers '''
+    primes = [True] * (n + 1)
+    primes[0] = primes[1] = False
+    for i in range(2, int(n**0.5) + 1):
+        if primes[i]:
+            for j in range(i*i, n + 1, i):
+                primes[j] = False
+    return [num for num, is_prime in enumerate(primes) if is_prime]
 
 
 def isWinner(x, nums):
-    ''' Gets the winner of the game '''
-    def can_win(n):
-        primes = get_primes_up_to_n(n)
-        total_primes = len(primes)
+    ''' Calculates and determines the winner of the game '''
+    max_n = max(nums)
+    primes = sieve_of_eratosthenes(max_n)
+    dp = [0] * (max_n + 1)
 
-        # Check if the total number of primes is even or odd
-        if total_primes % 2 == 0:
-            # If even, Ben wins
-            return "Ben"
-        else:
-            # If odd, Maria wins
-            return "Maria"
+    for n in range(2, max_n + 1):
+        dp[n] = not all(dp[n - p] for p in primes if p <= n)
 
-    winners = [can_win(num) for num in nums]
+    maria_wins = sum(dp[num] for num in nums)
 
-    # Count the occurrences of each winner
-    maria_wins = winners.count("Maria")
-    ben_wins = winners.count("Ben")
-
-    if maria_wins > ben_wins:
+    if maria_wins > x - maria_wins:
         return "Maria"
-    elif ben_wins > maria_wins:
+    elif maria_wins < x - maria_wins:
         return "Ben"
     else:
         return None
