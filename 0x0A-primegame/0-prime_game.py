@@ -1,32 +1,49 @@
 #!/usr/bin/python3
-''' Prime Game module '''
+""" Prime Game Algorithm Python """
 
 
-def sieve_of_eratosthenes(n):
-    ''' Uses sieve of Eratosthenes to calculate prime numbers '''
-    primes = [True] * (n + 1)
-    primes[0] = primes[1] = False
-    for i in range(2, int(n**0.5) + 1):
-        if primes[i]:
-            for j in range(i*i, n + 1, i):
-                primes[j] = False
-    return [num for num, is_prime in enumerate(primes) if is_prime]
+def is_prime(n):
+    """ Checks if a number given n is a prime number """
+    return all(n % i != 0 for i in range(2, int(n ** 0.5) + 1))
+
+
+def calculate_primes(n, primes):
+    """ Calculate all primes """
+    top_prime = primes[-1]
+    primes.extend(i for i in range(top_prime + 1, n + 1) if is_prime(i))
 
 
 def isWinner(x, nums):
-    ''' Calculates and determines the winner of the game '''
-    max_n = max(nums)
-    primes = sieve_of_eratosthenes(max_n)
-    dp = [0] * (max_n + 1)
+    """
+    Arguments:
+    x - number of rounds.
+    nums - an array of n
 
-    for n in range(2, max_n + 1):
-        dp[n] = not all(dp[n - p] for p in primes if p <= n)
+    Return:
+        - name of the player that won the most rounds
+        - If winner cannot be determined, return None
 
-    maria_wins = sum(dp[num] for num in nums)
+    Assumption:
+        n and x will not be larger than 10000
+    """
 
-    if maria_wins > x - maria_wins:
+    players_wins = {"Maria": 0, "Ben": 0}
+
+    primes = [0, 0, 2]
+
+    calculate_primes(max(nums), primes)
+
+    for n in nums:
+        sum_options = sum(i != 0 and i <= n for i in primes[:n + 1])
+
+        winner = "Maria" if sum_options % 2 else "Ben"
+
+        if winner:
+            players_wins[winner] += 1
+
+    if players_wins["Maria"] > players_wins["Ben"]:
         return "Maria"
-    elif maria_wins < x - maria_wins:
+    elif players_wins["Ben"] > players_wins["Maria"]:
         return "Ben"
-    else:
-        return None
+
+    return None
